@@ -51,8 +51,10 @@ double benchmark_scan(qpl_path_t execution_path, uint8_t* source, uint8_t* desti
     job->op                 = qpl_op_scan_eq;
     job->src1_bit_width     = input_bit_width;
     job->num_input_elements = size;
-    job->out_bit_width      = qpl_ow_32;
+    job->out_bit_width      = qpl_ow_nom;
     job->param_low          = value_to_find;
+    job->flags              = QPL_FLAG_OMIT_CHECKSUMS |
+                              QPL_FLAG_OMIT_AGGREGATES;
 
     auto start_time = std::chrono::high_resolution_clock::now();
     status = qpl_execute_job(job);
